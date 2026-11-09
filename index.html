@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Para mi mejor amiga ✨</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="new.css" />
+    <link
+      href="https://googleapis.com"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      /* Pantalla 0: Portada de bienvenida */
+      #pantalla-bienvenida {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #3b0a1c 0%, #140208 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        text-align: center;
+        padding: 20px;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+      }
+
+      #pantalla-bienvenida h2 {
+        font-family: "Indie Flower", cursive;
+        color: #ffe3ec;
+        font-size: 2.2em;
+        margin-bottom: 25px;
+        text-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+      }
+
+      #btn-entrar {
+        padding: 15px 36px;
+        font-size: 19px;
+        font-weight: bold;
+        color: #ffffff;
+        background: linear-gradient(135deg, #ff3b6f, #b81b43);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0 25px rgba(255, 59, 111, 0.7);
+        animation: pulsoBienvenida 1.8s infinite;
+        transition: transform 0.2s ease;
+      }
+
+      #btn-entrar:hover {
+        transform: scale(1.08);
+      }
+
+      @keyframes pulsoBienvenida {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 0 20px rgba(255, 59, 111, 0.6);
+        }
+        50% {
+          transform: scale(1.06);
+          box-shadow: 0 0 35px rgba(255, 107, 157, 0.95);
+        }
+      }
+
+      /* Oculta la segunda vista al inicio */
+      #vista-carta {
+        display: none;
+        width: 100%;
+        position: relative;
+        z-index: 5;
+        padding: 40px 15px;
+      }
+
+      #vista-rosa {
+        z-index: 5;
+      }
+
+      /* Ajuste para que la carta crezca con el texto largo */
+      .postcard {
+        height: auto !important;
+        min-height: 500px;
+        padding: 2.5em 2.5em !important;
+      }
+
+      .postcard p {
+        font-size: 19px !important;
+        line-height: 1.6 !important;
+        text-align: left;
+      }
+
+      /* Luciérnagas y destellos */
+      #particulas-contenedor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .luciernaga {
+        position: absolute;
+        bottom: -20px;
+        border-radius: 50%;
+        opacity: 0;
+        animation: flotarYBrillar linear infinite;
+      }
+
+      @keyframes flotarYBrillar {
+        0% {
+          transform: translateY(0) translateX(0) scale(0.5);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.95;
+        }
+        50% {
+          transform: translateY(-50vh) translateX(25px) scale(1.1);
+          opacity: 0.6;
+        }
+        80% {
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(-108vh) translateX(-20px) scale(0.4);
+          opacity: 0;
+        }
+      }
+
+      /* Marco estilo Polaroid para la foto */
+      .marco-foto {
+        background: #ffffff;
+        padding: 12px 12px 24px 12px;
+        border-radius: 6px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        width: 220px;
+        margin: 0 auto 25px auto;
+        transform: rotate(-2deg);
+        transition: transform 0.3s ease;
+        text-align: center;
+      }
+
+      .marco-foto:hover {
+        transform: rotate(0deg) scale(1.04);
+      }
+
+      .marco-foto img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 3px;
+        display: block;
+        background-color: #f8d7e3;
+      }
+
+      .pie-foto {
+        font-family: "Indie Flower", cursive;
+        color: #800020;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 8px;
+        display: block;
+      }
+
+      /* Botón flotante de música */
+      #btn-musica {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.85);
+        color: #b81b43;
+        border: 2px solid #d52d58;
+        border-radius: 50px;
+        padding: 10px 18px;
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        transition: transform 0.2s ease;
+      }
+
+      #btn-musica:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body id="cuerpo-pagina">
+    <!-- PANTALLA 0: BIENVENIDA -->
+    <div id="pantalla-bienvenida">
+      <h2>Tienes un detalle especial esperando... ✨</h2>
+      <button id="btn-entrar" onclick="iniciarExperiencia()">
+        Toca para abrir 💌
+      </button>
+    </div>
+
+    <!-- Capa de luciérnagas -->
+    <div id="particulas-contenedor"></div>
+
+    <!-- Canción (guardar como musica.mp3 en la carpeta) -->
+    <audio id="musica-fondo" loop>
+      <source src="musica.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button id="btn-musica" onclick="alternarMusica()">⏸️ Pausar música</button>
+
+    <!-- VISTA 1: LA ROSA -->
+    <div id="vista-rosa" class="container">
+      <div class="glass">
+        <div class="shine"></div>
+      </div>
+      <div class="thorns">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="leaves">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="petals">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="text">
+        <h2>
+          Una amistad como la nuestra merece esto y mucho más.<br />
+          Tengo algo para ti :
+          <a href="#" onclick="abrirCarta(event)">Abrir sorpresa ✨</a>
+        </h2>
+      </div>
+    </div>
+
+    <!-- VISTA 2: LA CARTA Y LA FOTO -->
+    <div id="vista-carta">
+      <div class="wrap">
+        <h1>Para tí, mi mejor amiga 💖</h1>
+        <div class="postcard1"></div>
+        <div class="postcard">
+          <!-- Marco con la foto de las dos (guardar como amigas.jpg) -->
+          <div class="marco-foto">
+            <img src="amigas.jpg" alt="Nosotras" />
+            <span class="pie-foto">Siempre juntas ✨</span>
+          </div>
+
+          <p>
+            <span>Y hoy te doy las gracias 🤍</span>
+            <br /><br />
+            Aunque a veces no sé cómo decirte todo lo que significas para mí,
+            porque hay cosas que me pesan en el pecho y no me salen las
+            palabras...
+            <br /><br />
+            Capaz no me doy cuenta siempre, capaz hago como si nada, pero sé que
+            estuviste cuando todo se hacía difícil.
+            <br /><br />
+            Gracias por todo lo que hiciste por mí, pero más que nada, ¡por todo
+            lo que hiciste en silencio, amiga! Por todo lo que te guardaste,
+            porque sé que hubieron cosas que dolieron, momentos en donde no fue
+            fácil nuestra amistad y aun así seguiste estando sin hacer ruido...
+            <br /><br />
+            Sé que hubo sacrificios, de esos que nadie ve, de esos que te
+            cambian por dentro pero los haces igual. Por eso es que cada vez que
+            escucho <em>“Sacrificios”</em> de Airbag, pienso en eso: en todo lo
+            que se rompe un poco para que otra cosa pueda seguir. Y me duele no
+            haberlo entendido antes...
+            <br /><br />
+            Porque capaz no soy la mejor demostrando lo que siento, me equivoco
+            mil veces, pero si hay algo que tengo en claro es que sos una parte
+            de todo lo que soy, amiga.
+            <br /><br />
+            Por eso te doy las gracias por ser esa persona que me cambia por
+            completo, ese alguien que me hace creer siempre que en el mundo
+            existen cosas buenas, ese alguien que hace que el mundo oscuro y
+            triste se convierta en uno lleno de colores. Porque en medio de este
+            mundo ruidoso y lleno de rostros, donde el tiempo pasa y todo es
+            aburrido, existe una certeza que no se desgasta, y es que
+            <strong>“siempre vas a ser mi persona favorita”</strong>, a quien amo
+            y amaré siempre más que a nadie.
+            <br /><br />
+            <span class="ullu">
+              Mi media naranja,<br />
+              Mi mitad,<br />
+              Mi compañera de vida,<br />
+              Mi hermana y mejor amiga.<br />
+              Te amo ❤️
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById("musica-fondo");
+      const btnMusica = document.getElementById("btn-musica");
+
+      function crearLuciernagas() {
+        const contenedor = document.getElementById("particulas-contenedor");
+        const colores = [
+          { bg: "#fff3b0", shadow: "0 0 12px #ffd166, 0 0 24px #ff9f1c" },
+          { bg: "#ffb3c6", shadow: "0 0 12px #ff4d6d, 0 0 24px #ff758f" },
+          { bg: "#ffffff", shadow: "0 0 10px #ffffff, 0 0 20px #ffe5ec" },
+        ];
+
+        for (let i = 0; i < 35; i++) {
+          const particula = document.createElement("div");
+          particula.classList.add("luciernaga");
+
+          const tamaño = Math.random() * 6 + 3;
+          const estilo = colores[Math.floor(Math.random() * colores.length)];
+          const izquierda = Math.random() * 100;
+          const duracion = Math.random() * 8 + 6;
+
+          const retraso = Math.random() * 10;
+
+          particula.style.width = `${tamaño}px`;
+          particula.style.height = `${tamaño}px`;
+          particula.style.left = `${izquierda}%`;
+          particula.style.backgroundColor = estilo.bg;
+          particula.style.boxShadow = estilo.shadow;
+          particula.style.animationDuration = `${duracion}s`;
+          particula.style.animationDelay = `${retraso}s`;
+
+          contenedor.appendChild(particula);
+        }
+      }
+
+      crearLuciernagas();
+
+      // Desbloquea la música y desvanece la pantalla inicial
+      function iniciarExperiencia() {
+        const portada = document.getElementById("pantalla-bienvenida");
+
+        audio
+          .play()
+          .then(() => {
+            btnMusica.textContent = "⏸️ Pausar música";
+          })
+          .catch(() => {
+            btnMusica.textContent = "🎵 Activar música";
+          });
+
+        portada.style.opacity = "0";
+        setTimeout(() => {
+          portada.style.display = "none";
+        }, 800);
+      }
+
+      function alternarMusica() {
+        if (audio.paused) {
+          audio.play();
+          btnMusica.textContent = "⏸️ Pausar música";
+        } else {
+          audio.pause();
+          btnMusica.textContent = "🎵 Reanudar música";
+        }
+      }
+
+      function abrirCarta(evento) {
+        evento.preventDefault();
+        document.getElementById("vista-rosa").style.display = "none";
+
+        const vistaCarta = document.getElementById("vista-carta");
+        vistaCarta.style.display = "flex";
+        vistaCarta.style.justifyContent = "center";
+        vistaCarta.style.alignItems = "center";
+        vistaCarta.style.minHeight = "100vh";
+
+        document.body.style.overflowY = "auto";
+        document.body.style.display = "block";
+        document.body.style.background =
+          "radial-gradient(circle at top, #f7a8c4, #ea81ae 50%, #b81b43 100%)";
+
+        if (audio.paused) {
+          audio.play();
+          btnMusica.textContent = "⏸️ Pausar música";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,287 @@
+@import url("https://googleapis.com");
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  background: radial-gradient(circle at center, #4a0e24 0%, #240510 60%, #0f0206 100%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  width: 260px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cúpula de cristal realista */
+.glass {
+  position: relative;
+  height: 360px;
+  width: 220px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-radius: 110px 110px 12px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 40px rgba(245, 20, 84, 0.25), inset 0 0 25px rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+
+/* Reflejo vertical en el cristal */
+.shine {
+  position: absolute;
+  width: 14px;
+  height: 220px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
+  border-radius: 20px;
+  top: 45px;
+  left: 24px;
+  transform: rotate(-4deg);
+}
+
+/* Base de madera/oro debajo de la cúpula */
+.glass::after {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  left: -15px;
+  width: 250px;
+  height: 22px;
+  background: linear-gradient(90deg, #2c161d, #5c2b3a, #2c161d);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+}
+
+/* Pétalos */
+.petals > div {
+  position: absolute;
+  background: #d52d58;
+  width: 45px;
+  height: 80px;
+  top: 65px;
+  transition: all 0.5s ease;
+}
+
+.petals > div:nth-child(1) {
+  border-radius: 15px;
+  box-shadow: 0px 0px 35px #ff6b9d;
+  left: 108px;
+  top: 70px;
+  background: #e63262;
+}
+
+.petals > div:nth-child(2),
+.petals > div:nth-child(4),
+.petals > div:nth-child(6) {
+  background: #b81b43;
+  left: 88px;
+  border-radius: 0px 30px 0px 30px;
+  transform-origin: bottom right;
+}
+
+.petals > div:nth-child(3),
+.petals > div:nth-child(5),
+.petals > div:nth-child(7) {
+  background: #b81b43;
+  left: 128px;
+  border-radius: 30px 0px 30px 0px;
+  transform-origin: bottom left;
+}
+
+.petals > div:nth-child(2) {
+  z-index: 5;
+  background: #ab1a3f;
+  top: 85px;
+  height: 70px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.5);
+  animation: bloom2 3s ease-in-out forwards;
+}
+
+.petals > div:nth-child(3) {
+  z-index: 4;
+  background: #ab1a3f;
+  top: 85px;
+  height: 70px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.5);
+  animation: bloom3 3s ease-in-out forwards, glowing 2.5s ease-in-out infinite;
+}
+
+.petals > div:nth-child(4) {
+  z-index: 3;
+  background: #b81b43;
+  top: 80px;
+  height: 75px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.5);
+  animation: bloom4 3s ease-in-out forwards, glowing 2.5s ease-in-out infinite;
+}
+
+.petals > div:nth-child(5) {
+  z-index: 2;
+  background: #b81b43;
+  top: 80px;
+  height: 75px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.5);
+  animation: bloom5 3s ease-in-out forwards, glowing 2.5s ease-in-out infinite;
+}
+
+.petals > div:nth-child(6) {
+  z-index: 1;
+  background: #c9204b;
+  top: 75px;
+  height: 70px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.3);
+  animation: bloom6 3s ease-in-out forwards, glowing 2.5s ease-in-out infinite;
+}
+
+.petals > div:nth-child(7) {
+  z-index: 0;
+  background: #c9204b;
+  top: 75px;
+  height: 70px;
+  box-shadow: 0px 0px 50px rgba(245, 148, 184, 0.3);
+  animation: bloom7 3s ease-in-out forwards, glowing 2.5s ease-in-out infinite;
+}
+
+/* Hojas y tallo centrados dentro de la cúpula */
+.leaves > div:nth-last-child(1) {
+  position: absolute;
+  width: 55px;
+  height: 30px;
+  background: #338f37;
+  top: 130px;
+  left: 103px;
+  border-radius: 100px;
+}
+
+.leaves > div:nth-child(1) {
+  position: absolute;
+  width: 6px;
+  height: 215px;
+  background: #0a5c0a;
+  top: 105px;
+  left: 128px;
+  border-radius: 0 0 100px 100px;
+}
+
+.leaves > div:nth-child(2) {
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  border-radius: 5px 40px 20px 40px;
+  background: #0a5c0a;
+  transform-origin: bottom;
+  transform: rotate(-30deg);
+  top: 190px;
+  left: 108px;
+  box-shadow: inset 5px 5px #0f7a0f;
+}
+
+.leaves > div:nth-child(3) {
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  border-radius: 40px 5px 40px 20px;
+  background: #0a5c0a;
+  transform-origin: bottom;
+  transform: rotate(30deg);
+  top: 160px;
+  left: 123px;
+  box-shadow: inset -5px 5px #0f7a0f;
+}
+
+/* Espinas */
+.thorns > div {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.thorns > div:nth-child(odd) {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 6px solid #0a5c0a;
+  left: 133px;
+}
+
+.thorns > div:nth-child(even) {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 6px solid #0a5c0a;
+  left: 122px;
+}
+
+.thorns > div:nth-child(1) { top: 210px; }
+.thorns > div:nth-child(2) { top: 180px; }
+.thorns > div:nth-child(4) { top: 240px; }
+
+/* Animaciones */
+@keyframes bloom2 {
+  50% { transform: rotate(-90deg); top: 210px; left: 128px; }
+  100% {
+    transform: rotate(-60deg);
+    top: 268px;
+    left: 78px;
+    background: #71122a;
+    box-shadow: none;
+  }
+}
+@keyframes bloom3 { 100% { transform: rotate(45deg); } }
+@keyframes bloom4 { 100% { transform: rotate(-20deg); } }
+@keyframes bloom5 { 100% { transform: rotate(20deg); } }
+@keyframes bloom6 { 100% { transform: rotate(-5deg); } }
+@keyframes bloom7 { 100% { transform: rotate(5deg); } }
+
+@keyframes glowing {
+  50% {
+    background: #ff3b6f;
+    box-shadow: 0px 0px 65px #ff85b3;
+  }
+}
+
+/* Texto y botón moderno */
+.text {
+  margin-top: 38px;
+  width: 320px;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  color: #ffe3ec;
+}
+
+.text h2 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.text a {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 26px;
+  background: linear-gradient(135deg, #ff3b6f, #b81b43);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgba(255, 59, 111, 0.6);
+  animation: latido 2s infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.text a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 107, 157, 0.9);
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
